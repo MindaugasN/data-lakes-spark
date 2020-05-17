@@ -2,7 +2,7 @@
 */.ipynb_checkpoints/*
 
 # configs
-dwh.cfg
+dl.cfg
 
 # cache
 __pycache__
