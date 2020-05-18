@@ -1,5 +1,3 @@
-import os
-
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
 
@@ -7,6 +5,7 @@ import pyspark.sql.functions as F
 def create_spark_session():
     spark = SparkSession \
         .builder \
+        .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:2.7.0") \
         .getOrCreate()
     return spark
 
@@ -48,7 +47,7 @@ def process_song_data(spark, input_data, output_data):
 
 def process_log_data(spark, input_data, output_data):
     # get filepath to log data file
-    log_data = '{0}/log-data/*.json'.format(input_data)
+    log_data = '{0}/log_data/*/*/*.json'.format(input_data)
 
     # read log data file
     df = spark.read.json(log_data)
@@ -134,12 +133,11 @@ def process_log_data(spark, input_data, output_data):
 
 def main():
     spark = create_spark_session()
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    current_input_dir = os.path.join(current_dir, 'local_data')
-    current_output_dir = os.path.join(current_dir, 'data_lake')
+    input_data = "s3a://udacity-dend"
+    output_data = "s3a://mn-udacity-data-engineer"
     
-    process_song_data(spark, current_input_dir, current_output_dir)    
-    process_log_data(spark, current_input_dir, current_output_dir)
+    process_song_data(spark, input_data, output_data)    
+    process_log_data(spark, input_data, output_data)
 
 
 if __name__ == "__main__":

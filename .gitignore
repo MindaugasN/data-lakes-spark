@@ -6,3 +6,6 @@ dl.cfg
 
 # cache
 __pycache__
+
+# output data
+data_lake/

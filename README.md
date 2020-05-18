@@ -56,8 +56,12 @@ project
 |-- local_data                               # ---> Locally downloaded data for testing
     |-- log-data.zip
     |-- song-data.zip
+|-- etl.py                                   # ---> Spark script for processing all data local_data dir and storing again data_lake dir
+|-- spark_scripts
+    |-- cluster_etl.py                       # ---> Main script for processing all data from S3 and storing again to S3
 |-- README.md
-|-- etl.py                                   # ---> Main script for processing all data from S3 and storing again to S3
+|-- emr_cluster.py                           # ---> Simple EMRCluster class for starting, terminating, unploading and running spark job
+|-- emr_cluster.ipynb                        # ---> Jupyter notebook script for executing EMRCluster class and test data
 |-- dl.cfg.dist                              # ---> Template config for AWS credentials
 |-- .gitignore
 ```
@@ -69,14 +73,27 @@ project
 - [Python 3.6.x](http://docs.python-guide.org/en/latest/starting/installation/)
 - [pip](https://pip.pypa.io/en/stable/installing/)
 
-2. Python 3rd party libraries:
+2. Python 3rd party libraries: 
 
-3. AWS account:
+**(ONLINE MODE)**
+- [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
 
-- [AWS credentials](https://aws.amazon.com/getting-started/)
+```bash
+pip install boto3
+```
+
+**(LOCAL MODE)**
+- [Download Spark](https://spark.apache.org/docs/latest/)
+- [pyspark](https://pypi.org/project/pyspark/)
+
+```bash
+pip install pyspark
+```
 
 ## How to use this repo?
 
 1. Clone or download it.
 2. Make sure you met all the requirements listed above.
-3. Create a file `dl.cfg` from `dl.cfg.dist` and fill your AWS credentials.
+3. Create a file `dl.cfg` from `dl.cfg.dist` and fill your AWS credentials. **(ONLINE MODE)**
+4. Open `emr_cluster.ipynb` and run all cells. **(ONLINE MODE)**
+5. Run `emr.py`. **(LOCAL MODE)**
